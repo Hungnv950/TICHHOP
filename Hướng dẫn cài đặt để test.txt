@@ -1,0 +1,10 @@
+- Tạo 1 database tên "tichhop" trong pgsql
+- Vào file common/config/main-local.php thay đổi password với mật khẩu của pgsql của bạn
+- Trỏ tới project nơi có file composer.jon. Bật cmd và chạy lệnh "composer.update"
+- Tiếp tục tại thư mục đấy chạy lệnh "php yii migrate" sau đó chạy lệnh "php yii migrate --migrationPath=@yii/rbac/migrations"
+- Vào thư mục common/config/main-local.php bỏ comment của "as access" đi 
+- Vào localhost gõ localhost/tichhop/frontend/web để đăng kí tài khoản
+- Vào localhost gõ localhost/tichhop/frontend/web để đăng nhập 
+
+Chúc mừng bạn đã thành công!
+Chi tiết liên hệ: Hungnv950@gmail.com
