@@ -22,7 +22,6 @@ $config = [
                 [
                     'class' => 'fproject\rest\UrlRule',
                     'controller' => [
-                        'v1/book',
                         'v1/user',
                     ],
                 ]
