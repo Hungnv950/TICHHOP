@@ -1,8 +1,11 @@
 <?php
 namespace frontend\controllers;
 
+use backend\models\User;
+use common\models\UploadForm;
 use Yii;
 use yii\base\InvalidParamException;
+use yii\base\Model;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
@@ -12,6 +15,7 @@ use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
 use frontend\models\ContactForm;
+use yii\web\UploadedFile;
 
 /**
  * Site controller
@@ -214,5 +218,13 @@ class SiteController extends Controller
 
     public function actionTest() {
         return $this->render('test');
+    }
+
+    public function actionUpload() {
+        $model = new Model();
+
+        return $this->render('upload',[
+          "model" => $model
+        ]);
     }
 }

@@ -27,7 +27,7 @@ $this->title = 'Trang chủ';
 
                 <p>Mô tả</p>
 
-                <p><a class="btn btn-success" href="<?= Yii::$app->getUrlManager()->baseUrl?>/app/orthanc">Sử dụng</a></p>
+                <p><a class="btn btn-success" href="<?= Yii::$app->getUrlManager()->baseUrl?>/orthanc/index">Sử dụng</a></p>
             </div>
             <div class="col-lg-4">
                 <h2>GaiaEHR</h2>
