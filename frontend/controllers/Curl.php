@@ -27,4 +27,5 @@ class Curl
         curl_close($ch);
         return $result;
     }
+
 }
