@@ -31,9 +31,9 @@
             <td><?php if($info['dead']) echo "True"; else echo "False"; ?></td>
         </tr>
         <?php if($info['deathDate']!=null){?>
-        <tr>
-            <td width="100px" align="center">deathDate</td>
-            <td><?php echo $info['deathDate'];?></td>
+            <tr>
+                <td width="100px" align="center">deathDate</td>
+                <td><?php echo $info['deathDate'];?></td>
             </tr>
         <?php } ?>
     </table>

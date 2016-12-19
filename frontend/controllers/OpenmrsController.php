@@ -63,37 +63,28 @@ class OpenmrsController extends Controller
         ]);
     }
 
+    public function actionSearch()
+    {
+        $array=null;
+        if(isset($_POST['search'])&&$_POST['key']!=null){
+            $curl = new curlMRS();
+            $key= $_POST['key'];
+            $url='http://demo.openmrs.org/openmrs/ws/rest/v1/person?q='.$key;
+            $person=$curl->get($url);
+            $array=json_decode($person, true);
+//            var_dump($array);die();
+        }
+        return $this->render('search', [
+            'person' =>$array,
+            'key'=>$key
+        ]);
+    }
 
     public function actionCreate()
     {
         return $this->render('create');
     }
-//    public function actionAdd()
-//    {
-//        if(isset($_POST["create"])) {
-//            $name = array();
-//            $names = array();
-//            $person_data = array();
-//
-//            $name['givenName'] = $_POST["givenName"];
-//            $name['middleName'] = $_POST["middleName"];
-//            $name['familyName'] = $_POST["familyName"];
-//
-//            array_push($names, $name);
-//
-//            $person_data['gender'] = $_POST["gender"];
-//            $person_data['birthday'] = $_POST["birthday"];
-//            $person_data['names'] = $names;
-//
-//            $person_data = json_encode($person_data);
-//            $url = "http://demo.openmrs.org/openmrs/ws/rest/v1/person";
-//            $curl = new curlMRS();
-//            $out=$curl->create($person_data, $url);
-//            var_dump($out); die();
-//        }
-//        Yii::$app->response->redirect(['openmrs/index']);
-//
-//    }
+
 
     public function actionDelete(){
         $curl = new curlMRS();
@@ -112,7 +103,7 @@ class OpenmrsController extends Controller
 //       var_dump($array);
         return $this->render('info',
             ['info'=>$array
-        ]);
+            ]);
     }
 
     public function actionAdd()

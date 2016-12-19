@@ -17,52 +17,33 @@ $results=$person['results'];
 //var_dump($person);
 ?>
 
-<div class="">
-    <a href="<?= Yii::$app->getUrlManager()->baseUrl?>/openmrs/create" class="btn btn-info">Create Person</a>
-</div>
-<div class="">
-    <form action="<?php echo Yii::$app->getUrlManager()->baseUrl.'/openmrs/search/';?>" method="post" enctype="multipart/form-data">
-        <table class="create">
-            <tr>
-                <td><input type="text" name="key"></td>
-                <td><input type="submit" name="search" value="Search"></td>
-            </tr>
-
-        </table>
-    </form>
-</div>
 <div class="container">
     <div class="panel panel-default view">
-        <div class="panel-heading">View Person</div>
+        <div class="panel-heading">Search Person</div>
         <div class="panel-body">
+            <p>Kết quả tìm kiếm cho <b><?php echo $key?></b></p>
             <table>
                 <?php
-                if (isset($results)&& $results != null) {
+                if ($results != null) {
                     for($k=0;$k<sizeof($results);$k++){?>
                         <tr>
                             <td width="400px" > <a href="<?php echo $baseUrl."/openmrs/info?uuid=".$results[$k]['uuid'] ?>"><?php echo $results[$k]['display']; ?></a></td>
                             <td><a href="<?php echo $baseUrl."/openmrs/delete?url=".$patients_url.$results[$k]['uuid'] ?>" class="btn btn-danger"
                                    id = "delete_patient">Delete</a></td>
+                            <?php if($k+1 < sizeof($results)){?>
                             <td width="400px"> <a href="<?php echo $baseUrl."/openmrs/info?uuid=".$results[$k]['uuid'] ?>"><?php $k++; echo $results[$k]['display']?></a></td>
                             <td><a href="<?php echo $baseUrl."/openmrs/delete?url=".$patients_url.$results[$k]['uuid'] ?>" class="btn btn-danger"
                                    id = "delete_patient">Delete</a></td>
+                            <?php } ?>
                         </tr>
-
-                    <?php } ?>
-                    <tr>
-                        <td colspan="2" align="center"><?php if($previouspage >=0){?><a href="<?= Yii::$app->getUrlManager()->baseUrl?>/openmrs/index?<?php echo "page=".$previouspage;?>">Trang trước</a><?php }?></td>
-
-                        <td colspan="2" align="center"><a href="<?= Yii::$app->getUrlManager()->baseUrl?>/openmrs/index?<?php echo "page=".$nextpage;?>">Trang sau</a></td>
-
-                    </tr>
-                <?php }
+                <?php }}
                 else {
                     ?>
                     <P>Null</P>
                     <?php
                 }
                 ?>
-             <table>
+                <table>
         </div>
     </div>
 
