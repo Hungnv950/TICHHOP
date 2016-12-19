@@ -26,9 +26,6 @@ use yii\bootstrap\ActiveForm;
                 <td>Tên</td><td><input type="text" name="familyName"><br></td>
             </tr>
             <tr>
-                <td>Ngày sinh</td><td><input type="date" name="birthday"></td>
-            </tr>
-            <tr>
                 <td>Giới tính</td><td><input type="radio" name="gender" value="Male"> Male <input type="radio" name="gender" value="Female"> Female</td>
             </tr>
 

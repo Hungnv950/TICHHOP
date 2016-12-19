@@ -40,12 +40,13 @@ class curlMRS
         $output   = curl_exec($person_curL);
         $status   = curl_getinfo($person_curL,CURLINFO_HTTP_CODE);
         curl_close($person_curL);
-        return $output;
+        return $status;
     }
     public function delete($url) {
         $ch = curl_init();
         curl_setopt ($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST,"DELETE");
+        curl_setopt($ch, CURLOPT_USERPWD,"admin:Admin123");
         curl_setopt ($ch, CURLOPT_RETURNTRANSFER, 1);
         $result = curl_exec ($ch);
         curl_close($ch);
