@@ -30,11 +30,11 @@ $this->title = 'Trang chủ';
                 <p><a class="btn btn-success" href="<?= Yii::$app->getUrlManager()->baseUrl?>/orthanc/index">Sử dụng</a></p>
             </div>
             <div class="col-lg-4">
-                <h2>GaiaEHR</h2>
+                <h2>Open MRS</h2>
 
                 <p>Mô tả</p>
 
-                <p><a class="btn btn-danger" href="http://www.yiiframework.com/extensions/">Sử dụng</a></p>
+                <p><a class="btn btn-danger" href="<?= Yii::$app->getUrlManager()->baseUrl?>/openmrs/index">Sử dụng</a></p>
             </div>
         </div>
 
