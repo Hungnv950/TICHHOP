@@ -41,19 +41,32 @@ class OpenmrsController extends Controller
         ];
     }
 
+    public $username;
+    public $password;
+
+    public function getUser()
+    {
+        $user = ServiceAccess::find()->where(['=','user_id',Yii::$app->user->identity->getId()])->asArray()->all();
+        if (!$user) {
+            echo "<script>alert('None');</script>";
+            return Yii::$app->response->redirect(Url::to(['openmrs/null']));
+        }
+        else {
+            $this->username = $user[0]['id3'];
+            $this->password = $user[0]['pw3'];
+        }
+    }
+
     public function actionIndex()
     {
+        $this->getUser();
         $curl = new curlMRS();
         $p=0;
         if(isset($_GET['page'])) $p= $_GET['page'];
         $url='http://demo.openmrs.org/openmrs/ws/rest/v1/person?q&startIndex='.$p;
         $person=$curl->get($url);
-        if ($person == 1) {
-            var_dump($person);
-            Yii::$app->response->redirect(Url::to(['openmrs/null']));
-        }
         $array=json_decode($person, true);
-//        var_dump($array);die;
+//        var_dump($array);
 
         return $this->render('index', [
             'person' =>$array,
@@ -65,7 +78,7 @@ class OpenmrsController extends Controller
     public function actionSearch()
     {
         $array=null;
-        if(isset($_POST['search'])&& isset($_POST['key']) && $_POST['key'!=null]){
+        if(isset($_POST['search'])&&$_POST['key']!=null){
             $curl = new curlMRS();
             $key= $_POST['key'];
             $url='http://demo.openmrs.org/openmrs/ws/rest/v1/person?q='.$key;
@@ -88,7 +101,6 @@ class OpenmrsController extends Controller
     public function actionDelete(){
         $curl = new curlMRS();
         $url = $_GET['url'];
-
         $result=$curl->delete($url);
         var_dump($result);
         Yii::$app->response->redirect(['openmrs/index']);
