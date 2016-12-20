@@ -49,7 +49,7 @@ $patients_url = "http://localhost:8042/patients";
             ?>
         </div>
     </div>
-
+    <a href="<?php echo Yii::$app->getUrlManager()->baseUrl.'/orthanc/up/';?>" class="btn btn-success">up</a>
     <div class="panel panel-default create">
         <div class="panel-heading">Upload DCM file</div>
         <form action="<?php echo Yii::$app->getUrlManager()->baseUrl.'/orthanc/upload/';?>" method="post" enctype="multipart/form-data">
@@ -57,8 +57,5 @@ $patients_url = "http://localhost:8042/patients";
             <input type="submit" name="upload" value="Upload">
         </form>
     </div>
-<!--    <div class="panel-body">-->
-<!--        <iframe src="http://localhost:8042/app/explorer.html#upload" width="100%" height="500px" frameborder="0"></iframe>-->
-<!--    </div>-->
 
 </div>

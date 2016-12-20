@@ -8,46 +8,63 @@
 
 namespace frontend\controllers;
 use Yii;
+use backend\models\User;
 
 use mdm\admin\components\AccessControl;
 use yii\base\Controller;
 use yii\filters\VerbFilter;
+use backend\models\ServiceAccess;
+use yii\helpers\Url;
 
 class OpenmrsController extends Controller
 {
+
     /**
      * @inheritdoc
      */
     public function behaviors()
     {
         return [
-            'access' => [
-                'class' => \yii\filters\AccessControl::className(),
-                'only' => ['logout', 'signup'],
-                'rules' => [
-                    [
-                        'actions' => ['signup'],
-                        'allow' => true,
-                        'roles' => ['?'],
-                    ],
-                    [
-                        'actions' => ['logout'],
-                        'allow' => true,
-                        'roles' => ['@'],
-                    ],
-                ],
-            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
-                    'logout' => ['post'],
+                    'delete' => ['post'],
+                ],
+            ],
+            'access' => [
+                'class' => \yii\filters\AccessControl::className(),
+                'only' => ['index','create','update','view'],
+                'rules' => [
+                    // allow authenticated users
+                    [
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                    // everything else is denied
                 ],
             ],
         ];
     }
 
+    public $username;
+    public $password;
+
+    public function getUser()
+    {
+        $user = ServiceAccess::find()->where(['=','user_id',Yii::$app->user->identity->getId()])->asArray()->all();
+        if (!$user) {
+            echo "<script>alert('None');</script>";
+            return Yii::$app->response->redirect(Url::to(['openmrs/null']));
+        }
+        else {
+            $this->username = $user[0]['id3'];
+            $this->password = $user[0]['pw3'];
+        }
+    }
+
     public function actionIndex()
     {
+        $this->getUser();
         $curl = new curlMRS();
         $p=0;
         if(isset($_GET['page'])) $p= $_GET['page'];
@@ -76,7 +93,7 @@ class OpenmrsController extends Controller
         }
         return $this->render('search', [
             'person' =>$array,
-            'key'=>$key
+            'key'=>$key,
         ]);
     }
 
@@ -133,9 +150,13 @@ class OpenmrsController extends Controller
         $output   = curl_exec($person_curL);
         $status   = curl_getinfo($person_curL,CURLINFO_HTTP_CODE);
         curl_close($person_curL);
-        var_dump($output);
-        var_dump($status);
+//        var_dump($output);
+//        var_dump($status);
         Yii::$app->response->redirect(['openmrs/index']);
+    }
+
+    public function actionNull() {
+        return $this->render('null');
     }
 
 }
