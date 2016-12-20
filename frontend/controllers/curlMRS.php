@@ -49,7 +49,6 @@ class curlMRS
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST,"DELETE");
         curl_setopt($ch, CURLOPT_USERPWD,"admin:Admin123");
         curl_setopt ($ch, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($ch, CURLOPT_POST,1);
         $result = curl_exec ($ch);
         curl_close($ch);
         return $result;
