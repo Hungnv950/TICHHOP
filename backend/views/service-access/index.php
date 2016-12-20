@@ -33,8 +33,11 @@ $this->params['breadcrumbs'][] = $this->title;
                     return \backend\models\User::find()->where(['=','id',$data->user_id])->asArray()->all()[0]['username'];
                 }
             ],
-            'id1',
-            'pw1',
+//            'id1',
+            [
+              'attribute' => 'pw1',
+                'label' => 'Better Docor key'
+            ],
             'id2',
              'pw2',
              'id3',

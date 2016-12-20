@@ -12,6 +12,8 @@ use Yii;
 use mdm\admin\components\AccessControl;
 use yii\base\Controller;
 use yii\filters\VerbFilter;
+use backend\models\ServiceAccess;
+use yii\helpers\Url;
 
 class DoctorController extends Controller
 {
@@ -38,17 +40,41 @@ class DoctorController extends Controller
         ];
     }
 
+    public $key;
+
+    public function getKey()
+    {
+        if (!Yii::$app->user->isGuest) {
+            $user = ServiceAccess::find()->where(['=','user_id',Yii::$app->user->identity->getId()])->asArray()->all();
+            if (!$user) {
+                echo "<script>alert('You don\'t have permission'');</script>";
+                $url = Url::to(['openmrs/null']);
+                header("Location: localhost: "); /* Redirect browser */
+                exit();
+            }
+            else {
+                $this->key = $user[0]['pw1'];
+            }
+        }
+        else {
+            return Yii::$app->response->redirect(Url::to(['openmrs/null']));
+        }
+    }
+
     /**
      * @inheritdoc
      */
     public function actionIndex()
     {
+        $this->getKey();
+        $key = $this->key;
+
         $array=null;
         $limit=5;
         if(isset($_POST['search']) && $_POST['key']!=null){
             $curl = new CurlBD();
             if($_POST['limit']!=null && is_int(intval($_POST['limit']))) $limit=$_POST['limit'];
-            $url="https://api.betterdoctor.com/2016-03-01/doctors?name=".$_POST['key']."&limit=".$limit."&user_key=a72b7f3033bf4008f22f05fbdb71b570";
+            $url="https://api.betterdoctor.com/2016-03-01/doctors?name=".$_POST['key']."&limit=".$limit."&user_key=".$key;
             $doctor=$curl->get($url);
             $array=json_decode($doctor, true);
 //        var_dump($array['data'][0]['uid']);

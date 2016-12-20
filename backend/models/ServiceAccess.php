@@ -48,8 +48,8 @@ class ServiceAccess extends \yii\db\ActiveRecord
         return [
             'id' => Yii::t('app', 'ID'),
             'user_id' => Yii::t('app', 'User ID'),
-            'id1' => Yii::t('app', 'Id1'),
-            'pw1' => Yii::t('app', 'Pw1'),
+            'id1' => Yii::t('app', 'Better Doctor'),
+            'pw1' => Yii::t('app', 'Better Doctor PW'),
             'id2' => Yii::t('app', 'OrthanC Usesr'),
             'pw2' => Yii::t('app', 'Orhtanc Password'),
             'id3' => Yii::t('app', 'OpenMrs User'),

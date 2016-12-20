@@ -47,9 +47,7 @@ class curlMRS
             return Yii::$app->response->redirect(Url::to(['openmrs/null']));
         }
         $user = $username.':'.$password;
-//        $user = '"'.$user.'"';
-//        var_dump($user);die;
-        // Get cURL resource
+
         $curl = curl_init();
         // Set some options - we are passing in a useragent too here
         curl_setopt_array($curl, array(
@@ -67,9 +65,17 @@ class curlMRS
         return $output;
     }
     public function  create($person_data,$url){
+        $this->getUser();
+        $username = $this->username;
+        $password = $this->password;
+        if ($this->username =='' ){
+            return Yii::$app->response->redirect(Url::to(['openmrs/null']));
+        }
+        $user = $username.':'.$password;
+
         $person_curL = curl_init($url);
         curl_setopt($person_curL, CURLOPT_HTTPAUTH,CURLAUTH_BASIC);
-        curl_setopt($person_curL, CURLOPT_USERPWD,"admin:Admin123");
+        curl_setopt($person_curL, CURLOPT_USERPWD,$user);
 //        curl_setopt($person_curL, CURLOPT_URL,$url);
         curl_setopt($person_curL, CURLOPT_RETURNTRANSFER,true);
         curl_setopt($person_curL, CURLOPT_HTTPHEADER, array('Content-Type:application/json'));
@@ -81,10 +87,18 @@ class curlMRS
         return $status;
     }
     public function delete($url) {
+        $this->getUser();
+        $username = $this->username;
+        $password = $this->password;
+        if ($this->username =='' ){
+            return Yii::$app->response->redirect(Url::to(['openmrs/null']));
+        }
+        $user = $username.':'.$password;
+
         $ch = curl_init();
         curl_setopt ($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST,"DELETE");
-        curl_setopt($ch, CURLOPT_USERPWD,"admin:Admin123");
+        curl_setopt($ch, CURLOPT_USERPWD,$user);
         curl_setopt ($ch, CURLOPT_RETURNTRANSFER, 1);
         $result = curl_exec ($ch);
         curl_close($ch);

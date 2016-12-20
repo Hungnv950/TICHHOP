@@ -59,7 +59,6 @@ class OpenmrsController extends Controller
 
     public function actionIndex()
     {
-        $this->getUser();
         $curl = new curlMRS();
         $p=0;
         if(isset($_GET['page'])) $p= $_GET['page'];

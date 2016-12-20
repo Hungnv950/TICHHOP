@@ -7,12 +7,15 @@
  */
 
 namespace frontend\controllers;
+use Yii;
+use yii\helpers\Url;
+use backend\models\ServiceAccess;
 
 
 class CurlBD
 {
+
     public function get($url) {
-        // Get cURL resource
 
         //  Initiate curl
         $ch = curl_init();
