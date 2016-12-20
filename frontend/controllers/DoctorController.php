@@ -49,7 +49,7 @@ class DoctorController extends Controller
             if (!$user) {
                 echo "<script>alert('You don\'t have permission'');</script>";
                 $url = Url::to(['openmrs/null']);
-                header("Location: localhost: "); /* Redirect browser */
+                header("Location: localhost: ".$url); /* Redirect browser */
                 exit();
             }
             else {
@@ -68,6 +68,9 @@ class DoctorController extends Controller
     {
         $this->getKey();
         $key = $this->key;
+        if ($this->key =='' ){
+            return Yii::$app->response->redirect(Url::to(['openmrs/null']));
+        }
 
         $array=null;
         $limit=5;
