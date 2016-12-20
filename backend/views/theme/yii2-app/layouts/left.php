@@ -32,6 +32,7 @@
                 'items' => [
                     ['label' => 'Menu Yii2', 'options' => ['class' => 'header']],
                     ['label' => 'User', 'icon' => 'glyphicon glyphicon-user', 'url' => ['/user']],
+                    ['label' => 'Service', 'icon' => 'fa fa-dashboard', 'url' => ['/service-access']],
                     ['label' => 'Permission', 'icon' => 'glyphicon glyphicon-wrench', 'url' => ['/admin']],
                     ['label' => 'Login', 'url' => ['site/login'], 'visible' => Yii::$app->user->isGuest],
                     [

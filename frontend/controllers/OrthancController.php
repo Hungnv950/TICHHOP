@@ -15,6 +15,7 @@ use yii\filters\VerbFilter;
 
 class OrthancController extends Controller
 {
+
     /**
      * @inheritdoc
      */
@@ -109,51 +110,21 @@ class OrthancController extends Controller
     }
 
     public function actionUpload() {
-//        curl -X POST -H "Expect:" http://localhost:8042/instances --data-binary @CT.X.1.2.276.0.7230010.dcm
+//        curl -X POST -H "Expect:" http://localhost:8042/instances --data-binary @ffc.dcm
         if (isset($_POST['upload']))
         {
-            $url = "http://localhost:8042/instances/"; // e.g. http://localhost/myuploader/upload.php // request URL
+            $url = "http://localhost:8042/instances"; // e.g. http://localhost/myuploader/upload.php // request URL
             $filename = $_FILES['file']['name'];
-            $filedata = $_FILES['file']['tmp_name'];
-            $filesize = $_FILES['file']['size'];
-
-
-            if ($filedata != '')
-            {
-                $headers = array("Content-Type:data/binary"); // cURL headers for file uploading
-                $postfields = array("filedata" => "@$filedata", "filename" => $filename);
-                $ch = curl_init();
-                $options = array(
-                    CURLOPT_URL => $url,
-                    CURLOPT_HEADER => true,
-                    CURLOPT_POST => 1,
-                    CURLOPT_HTTPHEADER => $headers,
-                    CURLOPT_POSTFIELDS => $postfields,
-                    CURLOPT_INFILESIZE => $filesize,
-                    CURLOPT_RETURNTRANSFER => true
-                ); // cURL options
-                curl_setopt_array($ch, $options);
-                curl_exec($ch);
-
-                if(!curl_errno($ch))
-                {
-                    $info = curl_getinfo($ch);
-                    if ($info['http_code'] == 200)
-                        echo  $errmsg = "File uploaded successfully";
-//                    die;
-                }
-                else
-                {
-                    $errmsg = curl_error($ch);
-                    echo "ok";
-                }
-                curl_close($ch);
-            }
-            else
-            {
-                $errmsg = "Please select the file";
+            if(move_uploaded_file($_FILES['file']['tmp_name'], "E:/tmp". DIRECTORY_SEPARATOR . $filename)) {
+                $filedata = "E:/tmp". DIRECTORY_SEPARATOR . $filename;
+                $output = shell_exec('curl -X POST http://localhost:8042/instances --data-binary @'.$filedata);
             }
         }
-       // Yii::$app->response->redirect(['orthanc/index']);
+//        echo "?";
+        Yii::$app->response->redirect(['orthanc/index']);
+    }
+
+    public function actionUp() {
+        shell_exec('curl -X POST -H "Expect:" http://localhost:8042/instances --data-binary @ffc.dcm');
     }
 }
