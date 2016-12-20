@@ -9,38 +9,59 @@
 use \frontend\controllers;
 use yii\bootstrap\ActiveForm;
 
-$act = new controllers\Curl();
 $baseUrl = Yii::$app->getUrlManager()->baseUrl;
-$patients_url = "http://demo.openmrs.org/openmrs/ws/rest/v1/person/";
 $results=$doctor;
-var_dump($results); die();
+//var_dump($results);
+
 ?>
 
+<div class="">
+    <form action="<?php echo Yii::$app->getUrlManager()->baseUrl.'/doctor/index';?>" method="post" enctype="multipart/form-data">
+        <table class="create">
+            <tr>
+                <td>Từ khóa</td>
+                <td><input type="text" name="key"></td>
+            </tr>
+            <tr>
+                <td>Limit</td>
+                <td><input type="text" name="limit"></td>
+            </tr>
+            <tr>
+                <td colspan="2" align="center"><input type="submit" name="search" value="Search">
+            </tr>
 
+        </table>
+    </form>
+</div>
+<br>
+<?php if(isset($_POST['search'])&& $_POST['key']!=null){ ?>
 <div class="container">
     <div class="panel panel-default view">
         <div class="panel-heading">View Doctor</div>
         <div class="panel-body">
-            <table>
+            <p>Kết quả cho <b><?php echo $_POST['key'] ?></b> và limit là <b><?php echo $limit; ?></b></p>
+            <table border="1px" width="100%">
                 <?php
-                if (isset($results)&& $results != null) {
-                    for($k=0;$k<sizeof($results);$k++){?>
+                if (isset($results)&& sizeof($results['data']) != 0) {
+                    $practices = $results['data'][0]['practices'];?>
+                    <tr>
+                        <td align="center" > <b>Name</b></td>
+                        <td align="center"> <b> Contact</b></td>
+                        <td align="center"> <b>Email</b></td>
+                        <td align="center"> <b>Address</b></td>
+                    </tr>
+                    <?php for($k=0;$k<sizeof($results['data']);$k++){
+                        $practices = $results['data'][$k]['practices'][0];
+//                        var_dump($practices); die();
+                        ?>
                         <tr>
-                            <td width="400px" > <a href="#"><?php echo $results[$k]['display']; ?></a></td>
-                            <td><a href="<?php echo $baseUrl."/openmrs/delete?url=".$patients_url.$results[$k]['uuid'] ?>" class="btn btn-danger"
-                                   id = "delete_patient">Delete</a></td>
-                            <td width="400px"> <a href="<?php echo $baseUrl."/openmrs/info?uuid=".$results[$k]['uuid'] ?>"><?php $k++; echo $results[$k]['display']?></a></td>
-                            <td><a href="<?php echo $baseUrl."/openmrs/delete?url=".$patients_url.$results[$k]['uuid'] ?>" class="btn btn-danger"
-                                   id = "delete_patient">Delete</a></td>
+                            <td > <?php echo $practices['name']; ?></a></td>
+                            <td > <?php echo $practices['phones'][0]['number']; ?></td>
+                            <td > <?php if($practices['email']==null) echo "NULL"; else echo $practices['email'] ?></td>
+                            <td > <?php echo $practices['visit_address']['street'].",".$practices['visit_address']['city'].",".$practices['visit_address']['state_long']; ?></td>
                         </tr>
 
                     <?php } ?>
-                    <tr>
-                        <td colspan="2" align="center"><?php if($previouspage >=0){?><a href="<?= Yii::$app->getUrlManager()->baseUrl?>/openmrs/index?<?php echo "page=".$previouspage;?>">Trang trước</a><?php }?></td>
-
-                        <td colspan="2" align="center"><a href="<?= Yii::$app->getUrlManager()->baseUrl?>/openmrs/index?<?php echo "page=".$nextpage;?>">Trang sau</a></td>
-
-                    </tr>
                 <?php }
                 else {
                     ?>
@@ -51,11 +72,7 @@ var_dump($results); die();
                 <table>
         </div>
     </div>
-
-    <!--    <div class="panel-body">-->
-    <!--        <iframe src="http://localhost:8042/app/explorer.html#upload" width="100%" height="500px" frameborder="0"></iframe>-->
-    <!--    </div>-->
-
 </div>
+<?php } ?>
 
 
