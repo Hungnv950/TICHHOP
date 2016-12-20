@@ -48,6 +48,7 @@ class OrthancController extends Controller
     }
 
     public function actionIndex() {
+//        curl http://localhost:8042/patients
         $patient_info = "";
         $studies = "";
         $study = array();
@@ -57,7 +58,9 @@ class OrthancController extends Controller
         if (isset($patients_id) && $patients_id != null) {
             for($i = 0; $i < sizeof($patients_id); $i++){
                 $patient_info[$i] = json_decode($curl->curl("http://localhost:8042/patients/$patients_id[$i]","GET"));
+//                var_dump($patient_info[$i]);
             }
+//            die();
 
             $studies_id = json_decode($curl->curl("http://localhost:8042/studies/", "GET"));
             for ($i=0; $i< sizeof($studies_id);$i++){
@@ -102,6 +105,7 @@ class OrthancController extends Controller
     }
 
     public function actionDelete(){
+//        curl -X DELETE http://localhost:8042/patients/dc65762c-f476e8b9-898834f4-2f8a5014-2599bc94
         $url = $_GET['url'];
         $curl = new Curl();
         $curl->curl($url,"DELETE");
