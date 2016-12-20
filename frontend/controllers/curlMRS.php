@@ -24,6 +24,7 @@ class curlMRS
         ));
         // Send the request & save response to $resp
         $output = curl_exec($curl);
+//        var_dump($curl); die();
         // Close request to clear up some resources
         curl_close($curl);
         return $output;

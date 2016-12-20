@@ -16,11 +16,11 @@ $this->title = 'Trang chủ';
 
         <div class="row" style="text-align: center">
             <div class="col-lg-4">
-                <h2>Something</h2>
+                <h2>Better Doctor</h2>
 
                 <p>Mô tả</p>
 
-                <p><a class="btn btn-primary" href="http://www.yiiframework.com/doc/">Sử dụng</a></p>
+                <p><a class="btn btn-primary" href="<?= Yii::$app->getUrlManager()->baseUrl?>/doctor/index">Sử dụng</a></p>
             </div>
             <div class="col-lg-4">
                 <h2>OrthanC</h2>

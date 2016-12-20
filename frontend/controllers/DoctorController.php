@@ -13,53 +13,21 @@ use mdm\admin\components\AccessControl;
 use yii\base\Controller;
 use yii\filters\VerbFilter;
 
-class OpenmrsController extends Controller
+class DoctorController extends Controller
 {
     /**
      * @inheritdoc
      */
-    public function behaviors()
-    {
-        return [
-            'access' => [
-                'class' => \yii\filters\AccessControl::className(),
-                'only' => ['logout', 'signup'],
-                'rules' => [
-                    [
-                        'actions' => ['signup'],
-                        'allow' => true,
-                        'roles' => ['?'],
-                    ],
-                    [
-                        'actions' => ['logout'],
-                        'allow' => true,
-                        'roles' => ['@'],
-                    ],
-                ],
-            ],
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'logout' => ['post'],
-                ],
-            ],
-        ];
-    }
-
     public function actionIndex()
     {
-        $curl = new curlMRS();
-        $p=0;
-        if(isset($_GET['page'])) $p= $_GET['page'];
-        $url='http://demo.openmrs.org/openmrs/ws/rest/v1/person?q&startIndex='.$p;
-        $person=$curl->get($url);
-        $array=json_decode($person, true);
-//        var_dump($array);
-
+        $curl = new CurlBD();
+        $url="https://api.betterdoctor.com/2016-03-01/doctors?name=h&limit=100&user_key=a72b7f3033bf4008f22f05fbdb71b570";
+        $doctor=$curl->get($url);
+        $array=json_decode($doctor, true);
+//        var_dump($array['data'][0]['uid']);
+//        var_dump($array); die();
         return $this->render('index', [
-            'person' =>$array,
-            'nextpage' => ($p+50),
-            'previouspage' => ($p-50)
+            'doctor' =>$array['data'],
         ]);
     }
 
@@ -105,7 +73,7 @@ class OpenmrsController extends Controller
             ['info'=>$array
             ]);
     }
-//kkk
+
     public function actionAdd()
     {
         $name        = array();
