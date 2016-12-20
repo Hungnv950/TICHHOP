@@ -129,16 +129,16 @@
         },
         {
             "name": "bower-asset/jquery.inputmask",
-            "version": "3.2.4",
+            "version": "3.2.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/RobinHerbots/Inputmask.git",
-                "reference": "4e39624ea093d23c34f340c5bd8ab4e3a0aea17d"
+                "reference": "5a72c563b502b8e05958a524cdfffafe9987be38"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/RobinHerbots/Inputmask/zipball/4e39624ea093d23c34f340c5bd8ab4e3a0aea17d",
-                "reference": "4e39624ea093d23c34f340c5bd8ab4e3a0aea17d",
+                "url": "https://api.github.com/repos/RobinHerbots/Inputmask/zipball/5a72c563b502b8e05958a524cdfffafe9987be38",
+                "reference": "5a72c563b502b8e05958a524cdfffafe9987be38",
                 "shasum": ""
             },
             "require": {
