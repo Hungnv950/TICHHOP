@@ -31,11 +31,7 @@ $this->params['breadcrumbs'][] = $this->title;
 //            'password_reset_token',
              'email:email',
             // 'status',
-             [
-               'attribute' => 'created_at',
-                 'label' => 'Ngày tạo',
-
-             ],
+             'created_at',
             // 'updated_at',
 
             ['class' => 'yii\grid\ActionColumn'],

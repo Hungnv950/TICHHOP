@@ -22,26 +22,17 @@ class OrthancController extends Controller
     public function behaviors()
     {
         return [
+
             'access' => [
                 'class' => \yii\filters\AccessControl::className(),
-                'only' => ['logout', 'signup'],
+                'only' => ['index','create','update','view'],
                 'rules' => [
+                    // allow authenticated users
                     [
-                        'actions' => ['signup'],
-                        'allow' => true,
-                        'roles' => ['?'],
-                    ],
-                    [
-                        'actions' => ['logout'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
-                ],
-            ],
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'logout' => ['post'],
+                    // everything else is denied
                 ],
             ],
         ];

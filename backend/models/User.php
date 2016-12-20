@@ -5,7 +5,7 @@ namespace backend\models;
 use Yii;
 
 /**
- * This is the model class for table "user".
+ * This is the model class for table "{{%user}}".
  *
  * @property integer $id
  * @property string $username
@@ -24,7 +24,7 @@ class User extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'user';
+        return '{{%user}}';
     }
 
     /**
