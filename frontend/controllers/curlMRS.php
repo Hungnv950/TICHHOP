@@ -43,8 +43,11 @@ class curlMRS
         $this->getUser();
         $username = $this->username;
         $password = $this->password;
-        if ($this->username =='' ){
-            return Yii::$app->response->redirect(Url::to(['openmrs/null']));
+
+        if ($this->username =='' || $this->username == null){
+            header("Location: localhost: "); /* Redirect browser */
+            exit();
+//            return Yii::$app->response->redirect(Url::to(['openmrs/null']));
         }
         $user = $username.':'.$password;
 
